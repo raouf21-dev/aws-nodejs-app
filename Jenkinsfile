@@ -15,7 +15,7 @@ pipeline{
             steps{
                 script{
                     sshagent(["nodejs-app-ec2"]){
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.39.146.56 docker ps"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.39.146.56"
                     }
                 }
             }
