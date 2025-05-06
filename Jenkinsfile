@@ -5,6 +5,9 @@ pipeline{
     tools{
         nodejs "node"
     }
+     environment {
+         IMAGE_NAME = 'santana20095/java-maven:1.0'
+     }
     stages{
         
         stage('test'){
@@ -14,11 +17,12 @@ pipeline{
                 }
             }
         }
+
         stage("build docker image"){
             steps{
                 script{
                     echo "building the docker image..."
-                    ssh "docker build  --platform linux/amd64 -t $imageName ."
+                    ssh "docker build  --platform linux/amd64 -t $IMAGE_NAME ."
                 }
             }
         }
