@@ -1,7 +1,6 @@
 version: '3.8'
 services:
     nodejs-app:
-        build: .
-        ports:
+        image: ${IMAGE}
+    ports:
         - 3000:3000
-        
