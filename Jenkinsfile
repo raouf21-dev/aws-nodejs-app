@@ -2,12 +2,23 @@
 
 pipeline{
     agent any
+    tools{
+        nodejs "node"
+    }
     stages{
         
         stage('test'){
             steps{
                 script{
                     echo "Testing pipeline..."
+                }
+            }
+        }
+        stage("build docker image"){
+            steps{
+                script{
+                    echo "building the docker image..."
+                    ssh "docker build  --platform linux/amd64 -t $imageName ."
                 }
             }
         }
