@@ -42,11 +42,15 @@ pipeline{
         stage("connect to EC2"){
             steps{
                 script{
-                    def runImage = "docker run -p 3000:3000 -d $IMAGE_NAME:1.0"
+                    def runImage = "docker run -p 3000:3000 -d $IMAGE_NAME"
                     sshagent(["nodejs-app-ec2"]){
+                        sh "scp -o StrictHostKeyChecking=no server-cmds.sh ec2-user@13.39.146.56:/home/ec2-user/"
+                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ec2-user@13.39.146.56:/home/ec2-user/"
+
                         sh """
                             ssh -o StrictHostKeyChecking=no ec2-user@13.39.146.56 '
-                                docker-compose up 
+                                docker pull $IMAGE_NAME && 
+                                sh /home/ec2-user/server-cmds.sh
                             '
                          """
                     }
