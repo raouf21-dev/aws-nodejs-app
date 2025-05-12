@@ -6,7 +6,7 @@ pipeline{
         nodejs "node"
     }
      environment {
-         IMAGE_NAME = 'santana20095/aws-nodejs-app:1.0'
+         IMAGE_NAME = 'santana20095/aws-nodejs-app:1.1'
      }
     stages{
         
