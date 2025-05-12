@@ -19,6 +19,8 @@ pipeline{
             steps{
                 script{
                     echo "Testing pipeline..."
+                    echo "BRANCH_NAME: ${env.BRANCH_NAME}"
+                    echo "GIT_BRANCH: ${env.GIT_BRANCH}"
                 }
             }
         }
