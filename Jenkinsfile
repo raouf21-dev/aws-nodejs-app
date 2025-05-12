@@ -11,6 +11,11 @@ pipeline{
     stages{
         
         stage('test'){
+            when {
+            expression {
+              return env.GIT_BRANCH == "master"
+            }
+            } 
             steps{
                 script{
                     echo "Testing pipeline..."
