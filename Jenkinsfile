@@ -32,7 +32,6 @@ pipeline{
                 script{
                     def runImage = "docker run -p 3080:3080 -d $IMAGE_NAME:1.0"
                     sshagent(["nodejs-app-ec2"]){
-                        sh 'ssh-keygen -f "/var/jenkins_home/.ssh/known_hosts" -R "13.39.146.56"'
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@13.39.146.56 "
                     }
                 }
