@@ -22,7 +22,7 @@ pipeline{
             steps{
                 script{
                     echo "building the docker image..."
-                    ssh "docker-compose up ."
+                    sh "docker-compose up --build -d"
                 }
             }
         }
