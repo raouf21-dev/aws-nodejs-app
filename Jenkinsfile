@@ -12,20 +12,24 @@ pipeline{
         
         stage('test'){
             when {
-            expression {
-              return env.BRANCH_NAME == "main"
-            }
+                expression {
+                return env.BRANCH_NAME == "main"
+                }
             } 
             steps{
                 script{
                     echo "Testing pipeline..."
                     echo "BRANCH_NAME: ${env.BRANCH_NAME}"
-                    echo "GIT_BRANCH: ${env.GIT_BRANCH}"
                 }
             }
         }
 
         stage("build docker image"){
+            when {
+                expression {
+                return env.BRANCH_NAME == "main"
+                }
+            } 
             steps{
                 script{
                     echo "building the docker image..."
@@ -35,6 +39,11 @@ pipeline{
         }
 
         stage("push docker image"){
+            when {
+                expression {
+                return env.BRANCH_NAME == "main"
+                }
+            } 
             steps{
                 script{
                     echo "Pushing Image..."
@@ -47,6 +56,11 @@ pipeline{
         }
 
         stage("connect to EC2"){
+            when {
+                expression {
+                return env.BRANCH_NAME == "main"
+                }
+            } 
             steps{
                 script{
                     def runImage = "docker run -p 3000:3000 -d $IMAGE_NAME"
