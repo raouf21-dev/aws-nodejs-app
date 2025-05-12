@@ -48,7 +48,7 @@ pipeline{
                         sh """
                             ssh -o StrictHostKeyChecking=no ec2-user@13.39.146.56 '
                                 docker pull $IMAGE_NAME && 
-                                docker-compose up 
+                                sh .server-cmds.sh
                             '
                          """
                     }
