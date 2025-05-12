@@ -13,7 +13,7 @@ pipeline{
         stage('test'){
             when {
             expression {
-              return env.GIT_BRANCH == "master"
+              return env.GIT_BRANCH == "main"
             }
             } 
             steps{
