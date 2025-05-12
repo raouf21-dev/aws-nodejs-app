@@ -6,7 +6,7 @@ pipeline{
         nodejs "node"
     }
      environment {
-         IMAGE_NAME = 'santana20095/java-maven:1.0'
+         IMAGE_NAME = 'santana20095/aws-nodejs-app:1.0'
      }
     stages{
         
@@ -22,7 +22,19 @@ pipeline{
             steps{
                 script{
                     echo "building the docker image..."
-                    ssh "docker build  --platform linux/amd64 -t $IMAGE_NAME ."
+                    sh "docker build -t $IMAGE_NAME ."
+                }
+            }
+        }
+
+        stage("push docker image"){
+            steps{
+                script{
+                    echo "Pushing Image..."
+                    withCredentials([usernamePassword(credentialsId: "docker-hub-creds", passwordVariable: "PASS", usernameVariable: "USER")]){
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh "docker push $IMAGE_NAME" 
+                    }
                 }
             }
         }
@@ -30,9 +42,13 @@ pipeline{
         stage("connect to EC2"){
             steps{
                 script{
-                    def runImage = "docker run -p 3080:3080 -d $IMAGE_NAME:1.0"
+                    def runImage = "docker run -p 3000:3000 -d $IMAGE_NAME:1.0"
                     sshagent(["nodejs-app-ec2"]){
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.39.146.56 "
+                        sh """
+                            ssh -o StrictHostKeyChecking=no ec2-user@13.39.146.56 '
+                                docker-compose up 
+                            '
+                         """
                     }
                 }
             }
