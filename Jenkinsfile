@@ -6,7 +6,7 @@ pipeline{
         nodejs "node"
     }
      environment {
-         IMAGE_NAME = 'santana20095/java-maven:1.0'
+         IMAGE_NAME = 'santana20095/aws-nodejs-app:1.0'
      }
     stages{
         
@@ -22,7 +22,19 @@ pipeline{
             steps{
                 script{
                     echo "building the docker image..."
-                    ssh "docker build  --platform linux/amd64 -t $IMAGE_NAME ."
+                    ssh "docker-compose up ."
+                }
+            }
+        }
+
+        stage("push docker image"){
+            steps{
+                script{
+                    echo "Pushing Image..."
+                    withCredentials([usernamePassword(credentialsId: "docker-hub-creds", passwordVariable: "PASS", usernameVariable: "USER")]){
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh "docker push $IMAGE_NAME" 
+                    }
                 }
             }
         }
