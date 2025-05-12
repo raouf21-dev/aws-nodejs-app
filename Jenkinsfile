@@ -44,6 +44,7 @@ pipeline{
                 script{
                     def runImage = "docker run -p 3000:3000 -d $IMAGE_NAME:1.0"
                     sshagent(["nodejs-app-ec2"]){
+                        sh "scp -o StrictHostKeyChecking=no docker-compose.yml ec2-user@13.39.146.56:/home/ec2-user/docker-compose.yml"
                         sh """
                             ssh -o StrictHostKeyChecking=no ec2-user@13.39.146.56 '
                                 docker-compose up 
