@@ -46,7 +46,8 @@ pipeline{
                     sshagent(["nodejs-app-ec2"]){
                         sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ec2-user@13.39.146.56:/home/ec2-user/docker-compose.yaml"
                         sh """
-                            ssh -o StrictHostKeyChecking=no ec2-user@13.39.146.56 '
+                            ssh -o StrictHostKeyChecking=no ec2-user@13.39.146.56'
+                                docker pull $IMAGE_NAME && 
                                 docker-compose up 
                             '
                          """
