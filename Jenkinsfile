@@ -1,4 +1,10 @@
 #!/usr/bin/env groovy
+library identifier: 'aws-nodejs-SL@main', retriever: modernSCM(
+    [$class: 'GitSCMSource',
+    remote: 'https://github.com/raouf21-dev/aws-nodejs-SL.git',
+    credentialsID: 'git-creds'
+    ]
+)
 
 pipeline{
     agent any
@@ -9,18 +15,14 @@ pipeline{
          IMAGE_NAME = 'santana20095/aws-nodejs-app:1.0'
      }
     stages{
-        
         stage('test'){
             when {
                 expression {
                 return env.BRANCH_NAME == "main"
                 }
-            } 
+            }
             steps{
-                script{
-                    echo "Testing pipeline..."
-                    echo "BRANCH_NAME: ${env.BRANCH_NAME}"
-                }
+                test()
             }
         }
 
