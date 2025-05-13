@@ -11,9 +11,9 @@ pipeline{
     tools{
         nodejs "node"
     }
-     environment {
-         IMAGE_NAME = 'santana20095/aws-nodejs-app:1.0'
-     }
+    environment {
+        IMAGE_NAME = 'santana20095/aws-nodejs-app:1.0'
+    }
     stages{
         stage('test'){
             when {
@@ -25,7 +25,6 @@ pipeline{
                 test()
             }
         }
-
         stage("build docker image"){
             when {
                 expression {
