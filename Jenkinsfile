@@ -32,10 +32,7 @@ pipeline{
                 }
             } 
             steps{
-                script{
-                    echo "building the docker image..."
-                    sh "docker build -t $IMAGE_NAME ."
-                }
+                buildImage()
             }
         }
 
